@@ -1,0 +1,122 @@
+
+-Goal-
+Given a text document that is potentially relevant to this activity, first identify all entities needed from the text in order to capture the information and ideas in the text.
+Next, report all relationships among the identified entities.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: Suggest several labels or categories for the entity. The categories should not be specific, but should be as general as possible.
+- entity_description: Comprehensive description of the entity's attributes and activities
+Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+- relationship_strength: a numeric score indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in Chinese as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. If you have to translate into Chinese, just translate the descriptions, nothing else!
+
+5. When finished, output {completion_delimiter}.
+
+-Examples-
+######################
+
+Example 1:
+
+text:
+(含)   以下人員   宿費 餐雜費.宿費 = 265. 智利(Chile), 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 100. 阿根廷(Argentina), 總經理級以上主管   宿費 餐雜費.宿費 = 檢據實支. 阿根廷(Argentina), 總經理級以上主管   宿費 餐雜費.餐雜費 = 150或檢據實支. 阿根廷(Argentina), 高階主管.宿費 = 370. 阿根廷(Argentina), 高階主管.餐雜費 = 150. 阿根廷(Argentina), 協理級(含)   以下人員   宿費 餐雜費.宿費 = 295. 阿根廷(Argentina), 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 130. 烏拉圭(Uruguay), 總經理級以上主管   宿費 餐雜費.宿費 = 檢據實支. 烏拉圭(Uruguay), 總經理級以上主管   宿費 餐雜費.餐雜費 = 145或檢據實支. 烏拉圭(Uruguay), 高階主管.宿費 = 340. 烏拉圭(Uruguay), 高階主管.餐雜費 = 145. 烏拉圭(Uruguay), 協理級(含)   以下人員   宿費 餐雜費.宿費 = 275. 烏拉圭(Uruguay), 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 120. 美洲其他國家, 總經理級以上主管   宿費 餐雜費.宿費 = 檢據實支. 美洲其他國家, 總經理級以上主管   宿費 餐雜費.餐雜費 = 180或檢據實支. 美洲其他國家, 高階主管.宿費 = 440. 美洲其他國家, 高階主管.餐雜費 = 180. 美洲其他國家, 協理級(含)   以下人員   宿費 餐雜費.宿費 = 355. 美洲其他國家, 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 135. 歐洲地區, 總經理級以上主管   宿費 餐雜費.宿費 = . 歐洲地區, 總經理級以上主管   宿費 餐雜費.餐雜費 = . 歐洲地區, 高階主管.宿費 = . 歐洲地區, 高階主管.餐雜費 = . 歐洲地區, 協理級(含)   以下人員   宿費 餐雜費.宿費 = . 歐洲地區, 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = . 法國(France), 總經理級以上主管   宿費 餐雜費.宿費 = 檢據實支. 法國(France), 總經理級以上主管   宿費 餐雜費.餐雜費 = 155或檢據實支. 法國(France), 高階主管.宿費 = 390. 法國(France), 高階主管.餐雜費 = 155. 法國(France), 協理
+------------------------
+output:
+("entity"{tuple_delimiter}智利(Chile){tuple_delimiter}LOCATION{tuple_delimiter}提到的一个地点，与協理級以下人員的宿費和餐雜費相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}阿根廷(Argentina){tuple_delimiter}LOCATION{tuple_delimiter}提到的一个地点，与不同级别主管的宿費和餐雜費相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}烏拉圭(Uruguay){tuple_delimiter}LOCATION{tuple_delimiter}提到的一个地点，与不同级别主管的宿費和餐雜費相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}美洲其他國家{tuple_delimiter}LOCATION{tuple_delimiter}提到的一个地区，与不同级别主管的宿費和餐雜費相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}歐洲地區{tuple_delimiter}LOCATION{tuple_delimiter}提到的一个地区，与不同级别主管的宿費和餐雜費相关联，但未提供具体数值)
+{record_delimiter}
+("entity"{tuple_delimiter}法國(France){tuple_delimiter}LOCATION{tuple_delimiter}提到的一个地点，与不同级别主管的宿費和餐雜費相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}協理級以下人員{tuple_delimiter}ROLE{tuple_delimiter}公司内部的一个职位级别，与宿費和餐雜費的规定相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}總經理級以上主管{tuple_delimiter}ROLE{tuple_delimiter}公司内部的一个高级职位级别，与宿費和餐雜費的规定相关联)
+{record_delimiter}
+("entity"{tuple_delimiter}高階主管{tuple_delimiter}ROLE{tuple_delimiter}公司内部的一个高级职位级别，与宿費和餐雜費的规定相关联)
+{record_delimiter}
+("relationship"{tuple_delimiter}智利(Chile){tuple_delimiter}協理級以下人員{tuple_delimiter}智利地区的協理級以下人員的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}阿根廷(Argentina){tuple_delimiter}總經理級以上主管{tuple_delimiter}阿根廷地区的總經理級以上主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}阿根廷(Argentina){tuple_delimiter}高階主管{tuple_delimiter}阿根廷地区的高階主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}烏拉圭(Uruguay){tuple_delimiter}總經理級以上主管{tuple_delimiter}烏拉圭地区的總經理級以上主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}烏拉圭(Uruguay){tuple_delimiter}高階主管{tuple_delimiter}烏拉圭地区的高階主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}美洲其他國家{tuple_delimiter}總經理級以上主管{tuple_delimiter}美洲其他国家地区的總經理級以上主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}美洲其他國家{tuple_delimiter}高階主管{tuple_delimiter}美洲其他国家地区的高階主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}法國(France){tuple_delimiter}總經理級以上主管{tuple_delimiter}法国地区的總經理級以上主管的宿費和餐雜費规定{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}法國(France){tuple_delimiter}高階主管{tuple_delimiter}法国地区的高階主管的宿費和餐雜費规定{tuple_delimiter}5)
+{completion_delimiter}
+#############################
+
+
+Example 2:
+
+text:
+雜費.宿費 = 380. 盧森堡(Luxembourg), 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 165. 瑞士(Switzerland), 總經理級以上主管   宿費 餐雜費.宿費 = 檢據實支. 瑞士(Switzerland), 總經理級以上主管   宿費 餐雜費.餐雜費 = 165或檢據實支. 瑞士(Switzerland), 高階主管.宿費 = 405. 瑞士(Switzerland), 高階主管.餐雜費 = 165. 瑞士(Switzerland), 協理級(含)   以下人員   宿費 餐雜費.宿費 = 325. 瑞士(Switzerland), 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 125. 丹麥(Denmark), 總經理級以上主管   宿費 餐雜費.宿費 = 檢據實支. 丹麥(Denmark), 總經理級以上主管   宿費 餐雜費.餐雜費 = 140或檢據實支. 丹麥(Denmark), 高階主管.宿費 = 345. 丹麥(Denmark), 高階主管.餐雜費 = 140. 丹麥(Denmark), 協理級(含)   以下人員   宿費 餐雜費.宿費 = 275. 丹麥(Denmark), 協理級(含)   以下人員   宿費 餐雜費.餐雜費 = 105
+瑞典(Sweden), 1 = 檢據實支. 瑞典(Sweden), 2 = 160或檢據實支. 瑞典(Sweden), 3 = 390. 瑞典(Sweden), 4 = 160. 瑞典(Sweden), 5 = 315. 瑞典(Sweden), 6 = 120. 英國(United Kingdom), 1 = 檢據實支. 英國(United Kingdom), 2 = 180或檢據實支. 英國(United Kingdom), 3 = 440. 英國(United Kingdom), 4 = 180. 英國(United Kingdom), 5 = 355. 英國(United Kingdom), 6 = 155. 西班牙(Spain), 1 = 檢據實支. 西班牙(Spain), 2 = 150或檢據實支. 西班牙(Spain), 3 = 380. 西班牙(Spain), 4 = 150. 西班牙(Spain), 5 = 300. 西班牙(Spain), 6 = 130. 義大利(Italy), 1 = 檢據實支. 義大利(Italy), 2 = 165或檢據實支. 義大利(Italy), 3 = 405. 義大利(Italy), 4 = 165. 義大利(Italy), 5 = 325. 義大利(Italy), 6 = 145. 歐洲其他國家, 1 = 檢據實支. 歐洲其他國家, 2 = 190或檢據實支. 歐洲其他國家, 3 = 470. 歐洲其他國家, 4 = 190. 歐洲其他國家, 5 = 380. 歐洲其他國家, 6 = 165. 大洋洲地區, 1 = . 大洋洲地區, 2 = . 大洋洲地區, 3 = . 大洋洲地區, 4 = . 大洋洲地區, 5 = . 大洋洲地區, 6 = . 澳大利亞(Australia), 1 = 檢據實支. 澳大利亞(Australia), 
+------------------------
+output:
+("entity"{tuple_delimiter}盧森堡(Luxembourg){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与协理级以下人员的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}瑞士(Switzerland){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与不同级别的主管的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}丹麥(Denmark){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与不同级别的主管的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}瑞典(Sweden){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与不同编号的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}英國(United Kingdom){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与不同编号的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}西班牙(Spain){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与不同编号的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}義大利(Italy){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与不同编号的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}歐洲其他國家{tuple_delimiter}地理位置{tuple_delimiter}泛指除上述国家外的其他欧洲国家，与不同编号的宿费和餐雜费相关联）
+{record_delimiter}
+("entity"{tuple_delimiter}大洋洲地區{tuple_delimiter}地理位置{tuple_delimiter}提及的一个地区，但未提及具体的宿费和餐雜费信息）
+{record_delimiter}
+("entity"{tuple_delimiter}澳大利亞(Australia){tuple_delimiter}地理位置{tuple_delimiter}提及的一个国家，与宿费和餐雜费的檢據實支相关联）
+{record_delimiter}
+("relationship"{tuple_delimiter}盧森堡(Luxembourg){tuple_delimiter}瑞士(Switzerland){tuple_delimiter}两国都提及了与协理级以下人员的宿费和餐雜费相关的信息{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}瑞士(Switzerland){tuple_delimiter}丹麥(Denmark){tuple_delimiter}两国都提及了与不同级别的主管的宿费和餐雜费相关的信息{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}瑞典(Sweden){tuple_delimiter}英國(United Kingdom){tuple_delimiter}两国都提及了与不同编号的宿费和餐雜费相关的信息{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}西班牙(Spain){tuple_delimiter}義大利(Italy){tuple_delimiter}两国都提及了与不同编号的宿费和餐雜费相关的信息{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}歐洲其他國家{tuple_delimiter}大洋洲地區{tuple_delimiter}两者都是地理位置的分类，但提供的宿费和餐雜费信息不同{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}澳大利亞(Australia){tuple_delimiter}大洋洲地區{tuple_delimiter}澳大利亚是大洋洲地区的一部分，提及了宿费和餐雜费的檢據實支{tuple_delimiter}8)
+{completion_delimiter}
+#############################
+
+
+
+-Real Data-
+######################
+text: {input_text}
+######################
+output:

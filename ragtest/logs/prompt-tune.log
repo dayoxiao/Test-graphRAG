@@ -1,0 +1,16 @@
+16:55:35,201 graphrag.cli.index INFO Logging enabled at /Users/yoyo/cathay-GraphRAG-withOAI/ragtest/logs/prompt-tune.log
+16:55:35,204 graphrag.index.input.factory INFO loading input from root_dir=input
+16:55:35,204 graphrag.index.input.factory INFO using file storage for input
+16:55:35,205 graphrag.storage.file_pipeline_storage INFO search /Users/yoyo/cathay-GraphRAG-withOAI/ragtest/input for files matching .*\.txt$
+16:55:35,208 graphrag.index.input.util INFO Found 2 InputFileType.text files, loading 2
+16:55:35,209 graphrag.index.input.util INFO Total number of unfiltered InputFileType.text rows: 2
+16:55:39,884 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:55:47,734 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:22,598 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:26,361 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:28,349 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:29,161 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:31,839 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:38,78 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+16:56:38,103 graphrag.cli.index INFO Writing prompts to /Users/yoyo/cathay-GraphRAG-withOAI/ragtest/prompts
+16:56:38,104 graphrag.cli.index INFO Prompts written to /Users/yoyo/cathay-GraphRAG-withOAI/ragtest/prompts
